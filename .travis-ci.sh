@@ -1,5 +1,5 @@
 # Edit this for your own project dependencies
-OPAM_DEPENDS="mpp  ocamlfind  ocamlnet  ocamlrss  omd  xmlm"
+OPAM_DEPENDS="mpp  ocamlfind  ocamlnet  ocamlrss  omd  xmlm ssl"
 	 
 case "$OCAML_VERSION,$OPAM_VERSION" in
 3.12.1,1.0.0) ppa=avsm/ocaml312+opam10 ;;
