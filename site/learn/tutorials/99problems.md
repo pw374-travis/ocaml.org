@@ -222,30 +222,26 @@ elements with duplicates are transferred as (N E) lists.
 Since OCaml lists are homogeneous, one needs to define a type to hold
 both single elements and sub-lists.
 
-> ```ocamltop
-> type 'a rle =
->   | One of 'a
->   | Many of (int * 'a);;
-> ```
+```ocamltop
+type 'a rle =
+  | One of 'a
+  | Many of int * 'a;;
+```
 
 SOLUTION
 
 > ```ocamltop
-> let pack list =
->   let rec aux current acc = function
->     | [] -> [] (* Can only be reached if original list is empty *)
->     | [x] -> (x :: current) :: acc
->     | a :: (b :: _ as t) -> if a = b then aux (a :: current) acc t
->                             else aux [] ((a :: current) :: acc) t  in
->   List.rev (aux [] [] list)
->
-> let encode list =
->   let rec aux = function
+> let encode l =
+>   let create_tuple cnt elem =
+>     if cnt = 1 then One elem
+>     else Many (cnt, elem) in
+>   let rec aux count acc = function
 >     | [] -> []
->     | [] :: t -> aux t
->     | [x] :: t -> One x :: aux t
->     | (x :: l) :: t -> Many (1 + List.length l , x) :: aux t  in
->   aux (pack list)
+>     | [x] -> (create_tuple (count+1) x) :: acc
+>     | hd :: (snd :: _ as tl) ->
+>         if hd = snd then aux (count + 1) acc tl
+>         else aux 0 ((create_tuple (count + 1) hd) :: acc) tl in
+>     List.rev (aux 0 [] l)
 > ```
 
 ```ocamltop
