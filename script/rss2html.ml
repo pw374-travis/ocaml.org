@@ -8,7 +8,7 @@ open Utils
     HTML).  The formatting of the description must then be respected. *)
 let text_description = []
 
-let planet_url = "http://ocaml.org/community/planet.html"
+let planet_url = "http://ocaml.org/community/planet/"
 
 
 (* OPML -- subscriber list
